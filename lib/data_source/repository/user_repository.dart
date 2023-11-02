@@ -1,5 +1,5 @@
-import 'package:test_interview/data_source/data_source/user_data_source.dart';
-import 'package:test_interview/data_source/models/response/get_users_response.dart';
+import 'package:users/data_source/data_source/user_data_source.dart';
+import 'package:users/data_source/models/response/get_users_response.dart';
 
 abstract class UserRepository {
   Future<GetUsersResponse?> getUsers();

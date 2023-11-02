@@ -1,4 +1,4 @@
-import 'package:test_interview/data_source/models/user.dart';
+import 'package:users/data_source/models/user.dart';
 
 class GetUsersResponse {
   const GetUsersResponse({

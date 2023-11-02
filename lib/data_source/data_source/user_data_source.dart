@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'package:test_interview/data_source/models/response/get_users_response.dart';
+import 'package:users/data_source/models/response/get_users_response.dart';
 
 abstract class UserDataSource {
   Future<GetUsersResponse> getUsers();

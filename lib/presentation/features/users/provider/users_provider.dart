@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:test_interview/data_source/models/user.dart';
-import 'package:test_interview/data_source/repository/user_repository.dart';
+import 'package:users/data_source/models/user.dart';
+import 'package:users/data_source/repository/user_repository.dart';
 
 class UsersProvider extends ChangeNotifier {
   UsersProvider({
