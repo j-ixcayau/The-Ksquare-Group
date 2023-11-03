@@ -1,6 +1,8 @@
 import 'package:http/http.dart';
 
 class UserDataSourceFakes {
+  UserDataSourceFakes._();
+
   static Response validList = Response(
     '''[
     {
