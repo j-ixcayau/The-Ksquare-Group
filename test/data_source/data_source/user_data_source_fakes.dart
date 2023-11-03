@@ -1,5 +1,8 @@
+import 'package:http/http.dart';
+
 class UserDataSourceFakes {
-  static const String usersJson = '''[
+  static Response validList = Response(
+    '''[
     {
       "id": 1,
       "name": "Leanne Graham",
@@ -69,5 +72,22 @@ class UserDataSourceFakes {
         "bs": "e-enable strategic applications"
       }
     }
-  ]''';
+  ]''',
+    200,
+  );
+
+  static Response emptyList = Response(
+    '[]',
+    200,
+  );
+
+  static Response noValidresponse = Response(
+    'Something went wrong',
+    500,
+  );
+
+  static Response unknownResponse = Response(
+    'Not found',
+    404,
+  );
 }

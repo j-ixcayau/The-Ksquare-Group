@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:users/data_source/data_source/user_data_source.dart';
@@ -7,11 +7,11 @@ import 'package:users/data_source/models/response/get_users_response.dart';
 
 import 'user_data_source_fakes.dart';
 
-class MockHttpClient extends Mock implements http.Client {}
+class MockHttpClient extends Mock implements Client {}
 
 void main() {
   group(
-    'UserDataSourceImpl',
+    'UserDataSource Test',
     () {
       late UserDataSourceImpl userDataSource;
       late MockHttpClient mockHttpClient;
@@ -30,16 +30,13 @@ void main() {
       );
 
       test(
-        'getUsers should return a GetUsersResponse',
+        'Valid non empty list',
         () async {
           // Arrange
           when(
             () => mockHttpClient.get(any()),
           ).thenAnswer(
-            (_) async => http.Response(
-              UserDataSourceFakes.usersJson,
-              200,
-            ),
+            (_) async => UserDataSourceFakes.validList,
           );
 
           // Act
@@ -52,13 +49,47 @@ void main() {
       );
 
       test(
-        'getUsers should throw an exception if the request fails',
+        'Valid empty list',
         () async {
           // Arrange
           when(
             () => mockHttpClient.get(any()),
           ).thenAnswer(
-            (_) async => http.Response('Something went wrong', 500),
+            (_) async => UserDataSourceFakes.emptyList,
+          );
+
+          // Act
+          final getUsersResponse = await userDataSource.getUsers();
+
+          // Assert
+          expect(getUsersResponse, isA<GetUsersResponse>());
+          expect(getUsersResponse.users, isEmpty);
+        },
+      );
+
+      test(
+        'handler 500 response',
+        () async {
+          // Arrange
+          when(
+            () => mockHttpClient.get(any()),
+          ).thenAnswer(
+            (_) async => UserDataSourceFakes.noValidresponse,
+          );
+
+          // Act
+          expect(() async => await userDataSource.getUsers(), throwsException);
+        },
+      );
+
+      test(
+        'handler 404 response',
+        () async {
+          // Arrange
+          when(
+            () => mockHttpClient.get(any()),
+          ).thenAnswer(
+            (_) async => UserDataSourceFakes.unknownResponse,
           );
 
           // Act
