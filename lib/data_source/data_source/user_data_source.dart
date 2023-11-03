@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 import 'package:users/data_source/models/response/get_users_response.dart';
 
@@ -9,12 +9,17 @@ abstract class UserDataSource {
 }
 
 class UserDataSourceImpl implements UserDataSource {
-  final url = 'https://jsonplaceholder.typicode.com/users';
+  UserDataSourceImpl({
+    Client? httpClient,
+  }) : _httpClient = httpClient ?? Client();
+
+  final String url = 'https://jsonplaceholder.typicode.com/users';
+  final Client _httpClient;
 
   @override
   Future<GetUsersResponse> getUsers() async {
     final uri = Uri.parse(url);
-    final response = await http.get(uri);
+    final response = await _httpClient.get(uri);
 
     if (response.statusCode != 200) {
       throw Exception();
