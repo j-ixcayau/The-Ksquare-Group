@@ -10,15 +10,19 @@ import 'package:users/presentation/features/users/provider/users_provider.dart';
 class UsersPage extends StatelessWidget {
   const UsersPage({
     super.key,
+    this.repository,
   });
+
+  final UserRepository? repository;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => UsersProvider(
-        repository: UserRepositoryImpl(
-          dataSource: UserDataSourceImpl(),
-        ),
+        repository: repository ??
+            UserRepositoryImpl(
+              dataSource: UserDataSourceImpl(),
+            ),
       )..init(),
       child: Scaffold(
         appBar: AppBar(
