@@ -10,8 +10,8 @@ abstract class UserDataSource {
 
 class UserDataSourceImpl implements UserDataSource {
   UserDataSourceImpl({
-    Client? httpClient,
-  }) : _httpClient = httpClient ?? Client();
+    required Client httpClient,
+  }) : _httpClient = httpClient;
 
   final String url = 'https://jsonplaceholder.typicode.com/users';
   final Client _httpClient;

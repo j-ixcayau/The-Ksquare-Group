@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:users/data_source/repository/user_repository.dart';
@@ -22,6 +23,16 @@ void main() {
       setUp(
         () {
           mockUserRepository = MockUserRepository();
+
+          GetIt.instance.resetLazySingleton<UserRepository>();
+        },
+      );
+
+      setUpAll(
+        () {
+          GetIt.instance.registerLazySingleton<UserRepository>(
+            () => mockUserRepository,
+          );
         },
       );
 
@@ -36,7 +47,9 @@ void main() {
           );
 
           // Creation/Render of Widget
-          await _buildUI(tester, mockUserRepository);
+          await _buildUI(
+            tester,
+          );
 
           // Then
           final scaffold = find.byType(Scaffold);
@@ -59,7 +72,7 @@ void main() {
           );
 
           // Creation/Render of Widget
-          await _buildUI(tester, mockUserRepository);
+          await _buildUI(tester);
 
           // Then
           final scaffold = find.byType(Scaffold);
@@ -84,7 +97,7 @@ void main() {
           );
 
           // Creation/Render of Widget
-          await _buildUI(tester, mockUserRepository);
+          await _buildUI(tester);
 
           // Then
           final scaffold = find.byType(Scaffold);
@@ -103,10 +116,7 @@ void main() {
   );
 }
 
-Future<void> _buildUI(
-  WidgetTester tester,
-  UserRepository mockUserRepository,
-) async {
+Future<void> _buildUI(WidgetTester tester) async {
   tester.view.physicalSize = const Size(1080, 2220);
   tester.view.devicePixelRatio = 1.0;
 
@@ -119,9 +129,7 @@ Future<void> _buildUI(
         ),
         useMaterial3: true,
       ),
-      home: UsersPage(
-        repository: mockUserRepository,
-      ),
+      home: const UsersPage(),
     ),
   );
 
