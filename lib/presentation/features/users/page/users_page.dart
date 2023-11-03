@@ -19,7 +19,7 @@ class UsersPage extends StatelessWidget {
         repository: UserRepositoryImpl(
           dataSource: UserDataSourceImpl(),
         ),
-      ),
+      )..init(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Users'),
